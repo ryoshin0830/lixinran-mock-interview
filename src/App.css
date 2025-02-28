@@ -1,0 +1,765 @@
+:root {
+  --primary-color: #3366ff;
+  --secondary-color: #4d79ff;
+  --accent-color: #00ccff;
+  --light-bg: #f5f7fa;
+  --dark-bg: #212b36;
+  --danger-color: #ff4757;
+  --success-color: #2ed573;
+  --text-color: #212b36;
+  --light-text: #ffffff;
+  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.09);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.12);
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+  --transition: all 0.3s ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'SF Pro Display', 'Hiragino Kaku Gothic Pro', 'メイリオ', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  position: relative;
+  background-color: transparent;
+  border-radius: var(--border-radius-lg);
+}
+
+.app-container.time-warning {
+  position: relative;
+}
+
+.app-container.time-warning::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  pointer-events: none;
+  z-index: 10;
+  animation: bg-flash 1s infinite;
+}
+
+@keyframes bg-flash {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(255, 71, 87, 0.5); /* --danger-color with higher opacity */
+  }
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+/* コントロールパネル */
+.control-panel {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.control-button {
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.control-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* 設定パネル */
+.settings-panel {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.settings-panel h3 {
+  color: var(--dark-bg);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.settings-panel h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 40px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 10px;
+}
+
+.setting-group {
+  margin-bottom: 1rem;
+}
+
+.setting-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.setting-group input {
+  width: 100%;
+  max-width: 200px;
+  padding: 0.5rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.difficulty-buttons button {
+  background-color: var(--light-bg);
+  border: 1px solid var(--secondary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.difficulty-buttons button.active,
+.difficulty-buttons button:hover {
+  background-color: var(--secondary-color);
+  color: var(--light-text);
+}
+
+.close-button {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.close-button:hover {
+  background-color: var(--primary-color);
+}
+
+/* 履歴パネル */
+.history-panel {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  position: relative;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.history-panel h3 {
+  color: var(--primary-color);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.history-panel h3:first-child {
+  margin-top: 0;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.history-item, .recording-item {
+  background-color: var(--light-bg);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.history-timestamp, .recording-timestamp {
+  color: var(--secondary-color);
+}
+
+.history-category {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.history-difficulty {
+  color: var(--dark-bg);
+}
+
+.history-question, .recording-question {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.history-time {
+  font-size: 0.9rem;
+  color: var(--dark-bg);
+}
+
+.recordings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recording-audio {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* カテゴリセレクタ */
+.category-selector {
+  margin-bottom: 1.5rem;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.category-buttons button {
+  background-color: var(--light-bg);
+  border: 1px solid var(--secondary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-buttons button.active,
+.category-buttons button:hover {
+  background-color: var(--secondary-color);
+  color: var(--light-text);
+}
+
+/* タイマーとレコーディング */
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.timer {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  display: inline-block;
+  min-width: 160px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.2));
+  pointer-events: none;
+}
+
+.timer-warning {
+  background: linear-gradient(135deg, var(--danger-color), #ff8f93);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.record-button {
+  background-color: var(--dark-bg);
+  color: var(--light-text);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.record-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.record-button.recording {
+  background-color: var(--danger-color);
+  color: white;
+  animation: record-pulse 1s infinite;
+}
+
+@keyframes record-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.record-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.record-button:hover::before {
+  transform: translateX(100%);
+}
+
+.restart-timer-button {
+  background-color: var(--success-color);
+  color: var(--dark-bg);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.restart-timer-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.restart-timer-button:hover {
+  background-color: var(--primary-color);
+  color: var(--light-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.restart-timer-button:hover::before {
+  transform: translateX(100%);
+}
+
+/* 質問カード */
+.question-card {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.question-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.question-category {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.question-id {
+  color: var(--secondary-color);
+}
+
+.question-difficulty {
+  color: var(--dark-bg);
+  font-weight: bold;
+}
+
+.question-text {
+  font-size: 1.75rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  font-weight: 600;
+  color: var(--dark-bg);
+  letter-spacing: -0.5px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.controls button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.75rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.controls button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.controls button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.controls button:hover::before {
+  transform: translateX(100%);
+}
+
+.answer-section {
+  background-color: rgba(245, 247, 250, 0.7);
+  padding: 2rem;
+  border-radius: var(--border-radius-md);
+  margin-top: 1.5rem;
+  border-left: 3px solid var(--success-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.answer-section h3 {
+  color: var(--dark-bg);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.answer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--success-color), transparent);
+}
+
+/* スタートプロンプト */
+.start-prompt {
+  text-align: center;
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: 3rem;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, white, #f7f9fc);
+}
+
+.start-prompt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.start-prompt p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--dark-bg);
+  font-weight: 500;
+}
+
+.start-prompt button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.start-prompt button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.start-prompt button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.start-prompt button:hover::before {
+  transform: translateX(100%);
+}
+
+/* 使い方ガイド */
+.instructions {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  background: linear-gradient(135deg, white, #f9fafc);
+  margin-bottom: 2rem;
+}
+
+.instructions h3 {
+  color: var(--dark-bg);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.instructions h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 10px;
+}
+
+.instructions ol {
+  padding-left: 1.75rem;
+  line-height: 1.8;
+  color: var(--text-color);
+}
+
+.instructions li {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+/* ローディングと エラー表示 */
+.loading-container, .error-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.loading-container p {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.error-container p {
+  font-size: 1.2rem;
+  color: var(--danger-color);
+  margin-bottom: 1rem;
+}
+
+.error-container button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.error-container button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .question-text {
+    font-size: 1.2rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .controls button {
+    width: 100%;
+  }
+  
+  .timer-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .history-header, .question-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
